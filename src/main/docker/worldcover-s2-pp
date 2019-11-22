@@ -26,4 +26,4 @@ then
   echo 
 fi
 
-${HOME}/snap/bin/gpt ${HOME}/worldcover-s2-pp.xml -PsourceFile${container_source_data_path}/${source} -PtargetFile=${container_target_data_path}/${target}
+${HOME}/snap/bin/gpt ${HOME}/worldcover-s2-pp.xml -PsourceFile=${container_source_data_path}/${source} -PtargetFile=${container_target_data_path}/${target}
