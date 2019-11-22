@@ -26,6 +26,6 @@ displays the SNAP command line tool help message
       --mount type=bind,source=</path/on/host/to/dem>,destination=/home/worldcover/processing/dem \
       --mount type=bind,source=</path/on/host/to/source>,destination=/home/worldcover/processing/source \
       --mount type=bind,source=</path/on/host/to/target>,destination=/home/worldcover/processing/target \ 
-      source-product-file-name target-product-file-name
+      ./worldcover-s2-pp source-product-file-name target-product-file-name
 
 runs the Sentinel-2 pre-processing steps on a given source product file.
