@@ -18,14 +18,20 @@ Test the `gpt` command
 
 # Run commands within a Docker container
 
+Display the SNAP command line tool help message
+
     docker run bc/worldcover-s2-pp:0.1
 
-displays the SNAP command line tool help message
+Display the Sentinel-2 pre-processing command usage message
+
+    docker run bc/worldcover-s2-pp:0.1 ./worldcover-s2-pp
+    
+Runs the Sentinel-2 pre-processing on a given source product file
 
     docker run bc/worldcover-s2-pp:0.1 \
       --mount type=bind,source=</path/on/host/to/dem>,destination=/home/worldcover/processing/dem \
       --mount type=bind,source=</path/on/host/to/source>,destination=/home/worldcover/processing/source \
       --mount type=bind,source=</path/on/host/to/target>,destination=/home/worldcover/processing/target \ 
-      ./worldcover-s2-pp source-product-file-name target-product-file-name
+      ./worldcover-s2-pp <source-product-file-name> <target-product-file-name>
 
-runs the Sentinel-2 pre-processing steps on a given source product file.
+Be sure to replace the items in `<chevrons>` with paths and file names, which actually exist.
