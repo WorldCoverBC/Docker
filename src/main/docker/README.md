@@ -16,7 +16,7 @@ Test the `gpt` command
 
     zcat image-bc-worldcover-s2-pp-v0.1.tar.gz | docker load
 
-# Run commands within a Docker container
+# Run commands within the Docker container
 
 Display the SNAP command line tool help message
 
