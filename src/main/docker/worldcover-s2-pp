@@ -18,12 +18,13 @@ set -e
 container_source_data_path=${HOME}/processing/source
 container_target_data_path=${HOME}/processing/target
 
-source=${1}
-target=${2}
-
-if [ -z ${source} ]
+if [ $# -eq 2 ]
 then
-  echo 
+    source=$1
+    target=$2
+else
+    echo "usage: $0 <source-product-file-name> <target-product-file-name>"
+    exit 0
 fi
 
 ${HOME}/snap/bin/gpt ${HOME}/worldcover-s2-pp.xml -PsourceFile=${container_source_data_path}/${source} -PtargetFile=${container_target_data_path}/${target}
