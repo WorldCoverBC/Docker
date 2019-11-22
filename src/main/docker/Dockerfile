@@ -50,6 +50,7 @@ ADD --chown=worldcover worldcover-s2-pp.xml worldcover-s2-pp.xml
 
 # Make all scripts executable
 RUN chmod ug+x esa-snap*
+RUN chmod ug+x worldcover-s2-pp
 
 # Run SNAP installation script
 RUN ./esa-snap_sentinel_unix_7_0.sh -q
