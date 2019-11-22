@@ -1,0 +1,8 @@
+# Enter one VM parameter per line
+# To include another file, uncomment the following line:
+# -include-options [path to other .vmoption file]
+-server
+-Xms8G
+-Xmx8G
+
+-DDEM.srtm3GeoTiffDEMDataPath=${user.home}/processing/dem

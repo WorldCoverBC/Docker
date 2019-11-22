@@ -1,0 +1,51 @@
+#!/bin/sh
+# usage: esa-snap-update-modules
+set -e
+# Copyright (C) 2019 Brockmann Consult GmbH (info@brockmann-consult.de)
+#
+# This program is free software; you can redistribute it and/or modify it
+# under the terms of the GNU General Public License as published by the Free
+# Software Foundation; either version 3 of the License, or (at your option)
+# any later version.
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+# more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with this program; if not, see http://www.gnu.org/licenses/
+
+terminate_snap()
+{
+    sleep 2
+    pkill -TERM -f "snap/jre/bin/java"
+}
+
+update=0
+
+${HOME}/snap/bin/snap --nosplash --nogui --modules --update-all --refresh 2>&1 | while read -r line
+do
+    if echo ${line} | grep -q "Refreshing"
+    then
+        echo ${line}
+        continue
+    fi
+    if echo ${line} | grep -q "Will update"
+    then
+        echo ${line}
+        continue
+    fi
+    if echo ${line} | grep -q "updates="
+    then
+        update=${line##*=}
+        if [ ${update} -gt 0 ]
+        then
+            echo "Updating ${update} modules"
+        else
+            terminate_snap
+            echo "All modules are up to date"
+        fi
+    fi
+done
+
+exit ${update}
