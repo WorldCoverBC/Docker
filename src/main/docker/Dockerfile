@@ -14,12 +14,13 @@
 
 FROM ubuntu:bionic
 
-LABEL version="0.1"
+LABEL version="0.2"
 LABEL description="Ubuntu Linux with Sentinel Toolboxes, IdePix and Sentinel-2 atmospheric correction."
 
 # Update the Linux system and install prerequisites
 RUN apt-get -y update
 RUN apt-get -y upgrade
+RUN apt-get install -y sudo
 RUN apt-get install -y wget
 RUN apt-get autoremove
 RUN apt-get autoclean
