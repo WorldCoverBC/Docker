@@ -25,7 +25,9 @@ RUN apt-get autoremove
 RUN apt-get autoclean
 
 # Create user "worldcover"
-RUN useradd --create-home worldcover
+RUN adduser --disabled-password --gecos '' worldcover
+RUN adduser worldcover sudo
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 # Execute all commands below as user "worldcover"
 USER worldcover
@@ -39,16 +41,17 @@ RUN mkdir -p processing/target
 RUN wget http://step.esa.int/downloads/7.0/installers/esa-snap_sentinel_unix_7_0.sh
 
 # Add scripts for updating and installing modules
-ADD --chown=worldcover esa-snap-update-modules esa-snap-update-modules
-ADD --chown=worldcover esa-snap-install-module esa-snap-install-module
-ADD --chown=worldcover esa-snap-install-modules esa-snap-install-modules
-ADD --chown=worldcover modules-install.txt modules-install.txt
+ADD esa-snap-update-modules esa-snap-update-modules
+ADD esa-snap-install-module esa-snap-install-module
+ADD esa-snap-install-modules esa-snap-install-modules
+ADD modules-install.txt modules-install.txt
 
 # Add GPT wrapper script and graph
-ADD --chown=worldcover worldcover-s2-pp worldcover-s2-pp
-ADD --chown=worldcover worldcover-s2-pp.xml worldcover-s2-pp.xml
+ADD worldcover-s2-pp worldcover-s2-pp
+ADD worldcover-s2-pp.xml worldcover-s2-pp.xml
 
-# Make all scripts executable
+# Make all scripts executable by user "worldcover"
+RUN sudo chown -R worldcover /home/worldcover
 RUN chmod ug+x esa-snap*
 RUN chmod ug+x worldcover-s2-pp
 
@@ -63,7 +66,8 @@ RUN ./esa-snap-install-modules
 
 # Customize Java VM settings
 RUN rm -f snap/bin/gpt.vmoptions
-ADD --chown=worldcover gpt.vmoptions snap/bin/gpt.vmoptions
+ADD gpt.vmoptions snap/bin/gpt.vmoptions
+RUN sudo chown worldcover snap/bin/gpt.vmoptions
 
 # Cleanup
 RUN rm -f esa-snap*
