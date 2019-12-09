@@ -1,5 +1,5 @@
 <graph id="worldcover-s2-pp">
-    <version>0.3</version>
+    <version>1.0</version>
     <node id="ReadDem">
         <operator>Read</operator>
         <sources/>
