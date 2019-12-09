@@ -15,16 +15,19 @@ set -e
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, see http://www.gnu.org/licenses/
 
-container_source_data_path=${HOME}/processing/source
-container_target_data_path=${HOME}/processing/target
 
-if [ $# -eq 2 ]
+container_dem_path=${HOME}/processing/dem
+container_src_path=${HOME}/processing/source
+container_dst_path=${HOME}/processing/target
+
+if [ $# -eq 3 ]
 then
-    source=$1
-    target=$2
+    dem=$1
+    src=$2
+    dst=$3
 else
-    echo "usage: $0 <source-product-file-name> <target-product-file-name>"
+    echo "usage: $0 <dem-tile-file-name> <src-tile-file-name> <dst-tile-file-name>"
     exit 0
 fi
 
-${HOME}/snap/bin/gpt ${HOME}/worldcover-s2-pp.xml -PsourceFile=${container_source_data_path}/${source} -PtargetFile=${container_target_data_path}/${target}
+${HOME}/snap/bin/gpt -c 8GB -x ${HOME}/worldcover-s2-pp.xml -PsourceFileDem=${container_dem_path}/${dem} -PsourceFileL1c=${container_src_path}/${src} -PtargetFile=${container_dst_path}/${dst}

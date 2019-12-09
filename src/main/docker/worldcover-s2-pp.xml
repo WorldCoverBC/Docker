@@ -1,79 +1,120 @@
 <graph id="worldcover-s2-pp">
-  <version>1.0</version>
-    <node id="Read">
-      <operator>Read</operator>
-      <sources/>
-      <parameters>
-        <file>${sourceFile}</file>
-      </parameters>
+    <version>0.3</version>
+    <node id="ReadDem">
+        <operator>Read</operator>
+        <sources/>
+        <parameters>
+            <file>${sourceFileDem}</file>
+        </parameters>
     </node>
-    <node id="S2Resampling">
-      <operator>S2Resampling</operator>
-      <sources>
-        <sourceProduct refid="Read"/>
-      </sources>
-      <parameters class="com.bc.ceres.binding.dom.XppDomElement">
-        <resolution>20</resolution>
-        <upsampling>Bilinear</upsampling>
-        <downsampling>Mean</downsampling>
-        <flagDownsampling>First</flagDownsampling>
-        <resampleOnPyramidLevels>true</resampleOnPyramidLevels>
-      </parameters>
+
+    <node id="CreateElevation">
+        <operator>BandMaths</operator>
+        <sources>
+            <sourceProduct refid="ReadDem"/>
+        </sources>
+        <parameters>
+            <targetBands>
+                <targetBand>
+                    <name>elevation</name>
+                    <type>int16</type>
+                    <expression>band_1</expression>
+                    <description/>
+                    <unit/>
+                </targetBand>
+            </targetBands>
+            <variables/>
+        </parameters>
     </node>
-    <node id="IdePixNode">
-      <operator>Idepix.Sentinel2</operator>
-      <sources>
-            <sourceProduct>S2Resampling</sourceProduct>
-      </sources>
-      <parameters>
-        <!-- leave out refl bands to only join classif flags with the original product later -->
-    		<!-- <radianceBandsToCopy>${radBands}</radianceBandsToCopy> -->
-        <copyToaReflectances>true</copyToaReflectances>
-        <computeMountainShadow>false</computeMountainShadow>
-        <computeCloudShadow>true</computeCloudShadow>
-        <computeCloudBuffer>true</computeCloudBuffer>
-        <computeCloudBufferForCloudAmbiguous>false</computeCloudBufferForCloudAmbiguous>
-        <cloudBufferWidth>4</cloudBufferWidth>
-        <demName>SRTM 3Sec</demName>
-      </parameters>
+
+    <node id="ReadL1c">
+        <operator>Read</operator>
+        <sources/>
+        <parameters>
+            <file>${sourceFileL1c}</file>
+        </parameters>
     </node>
-    <node id="Resample">
-      <operator>Resample</operator>
-      <sources>
-        <sourceProduct refid="IdePixNode"/>
-      </sources>
-      <parameters class="com.bc.ceres.binding.dom.XppDomElement">
-        <targetResolution>10</targetResolution>
-        <upsampling>Nearest</upsampling>
-        <downsampling>Mean</downsampling>
-        <flagDownsampling>First</flagDownsampling>
-        <resampleOnPyramidLevels>true</resampleOnPyramidLevels>
-      </parameters>
+
+    <node id="ResampleTo20m">
+        <operator>S2Resampling</operator>
+        <sources>
+            <sourceProduct refid="ReadL1c"/>
+        </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <resolution>20</resolution>
+            <upsampling>Bilinear</upsampling>
+            <downsampling>Mean</downsampling>
+            <flagDownsampling>First</flagDownsampling>
+            <resampleOnPyramidLevels>true</resampleOnPyramidLevels>
+        </parameters>
     </node>
+
+    <node id="Merge">
+        <operator>BandMerge</operator>
+        <sources>
+            <sourceProduct refid="ResampleTo20m"/>
+            <sourceProduct.1 refid="CreateElevation"/>
+        </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <sourceBands/>
+            <geographicError>1.0E-5</geographicError>
+        </parameters>
+    </node>
+
+    <node id="Classify">
+        <operator>Idepix.S2</operator>
+        <sources>
+            <sourceProduct>Merge</sourceProduct>
+        </sources>
+        <parameters>
+            <copyToaReflectances>false</copyToaReflectances>
+            <computeMountainShadow>false</computeMountainShadow>
+            <computeCloudShadow>true</computeCloudShadow>
+            <computeCloudBuffer>true</computeCloudBuffer>
+            <computeCloudBufferForCloudAmbiguous>false</computeCloudBufferForCloudAmbiguous>
+            <cloudBufferWidth>10</cloudBufferWidth>
+        </parameters>
+    </node>
+    
     <node id="Subset">
-      <operator>Subset</operator>
-      <sources>
-        <sourceProduct refid="Resample"/>
-      </sources>
-      <parameters class="com.bc.ceres.binding.dom.XppDomElement">
-        <sourceBands>pixel_classif_flags</sourceBands>
-        <referenceBand>pixel_classif_flags</referenceBand>
-        <geoRegion/>
-        <subSamplingX>1</subSamplingX>
-        <subSamplingY>1</subSamplingY>
-        <fullSwath>false</fullSwath>
-        <tiePointGridNames/>
-        <copyMetadata>true</copyMetadata>
-      </parameters>
+        <operator>Subset</operator>
+        <sources>
+            <sourceProduct refid="Classify"/>
+        </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <sourceBands>pixel_classif_flags</sourceBands>
+            <referenceBand>pixel_classif_flags</referenceBand>
+            <geoRegion/>
+            <subSamplingX>1</subSamplingX>
+            <subSamplingY>1</subSamplingY>
+            <fullSwath>false</fullSwath>
+            <tiePointGridNames/>
+            <copyMetadata>true</copyMetadata>
+        </parameters>
     </node>
+    
+    <node id="ResampleTo10m">
+        <operator>Resample</operator>
+        <sources>
+            <sourceProduct refid="Subset"/>
+        </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <targetResolution>10</targetResolution>
+            <upsampling>Nearest</upsampling>
+            <downsampling>Mean</downsampling>
+            <flagDownsampling>First</flagDownsampling>
+            <resampleOnPyramidLevels>true</resampleOnPyramidLevels>
+        </parameters>
+    </node>
+
     <node id="Write">
-      <operator>Write</operator>
-      <sources>
-        <sourceProduct refid="Subset"/>
-      </sources>
-      <parameters class="com.bc.ceres.binding.dom.XppDomElement">
-        <file>${targetFile}</file>
-        <formatName>GeoTIFF</formatName>
-      </parameters>
+        <operator>Write</operator>
+        <sources>
+            <sourceProduct refid="ResampleTo10m"/>
+        </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <file>${targetFile}</file>
+            <formatName>GeoTIFF</formatName>
+        </parameters>
     </node>
 </graph>
