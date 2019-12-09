@@ -2,7 +2,7 @@
 # To include another file, uncomment the following line:
 # -include-options [path to other .vmoption file]
 -server
--Xms8G
--Xmx8G
+-Xms12G
+-Xmx12G
 
 -DDEM.srtm3GeoTiffDEMDataPath=${user.home}/processing/dem
