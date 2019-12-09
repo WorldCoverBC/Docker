@@ -30,4 +30,4 @@ else
     exit 0
 fi
 
-${HOME}/snap/bin/gpt -c 8G -x ${HOME}/worldcover-s2-pp.xml -PsourceFileDem=${container_dem_path}/${dem} -PsourceFileL1c=${container_src_path}/${src} -PtargetFile=${container_dst_path}/${dst}
+${HOME}/snap/bin/gpt -c 8G -e -x ${HOME}/worldcover-s2-pp.xml -PsourceFileDem=${container_dem_path}/${dem} -PsourceFileL1c=${container_src_path}/${src} -PtargetFile=${container_dst_path}/${dst}

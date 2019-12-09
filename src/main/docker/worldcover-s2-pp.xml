@@ -67,7 +67,7 @@
             <sourceProduct>Merge</sourceProduct>
         </sources>
         <parameters>
-            <copyToaReflectances>false</copyToaReflectances>
+            <copyToaReflectances>true</copyToaReflectances>
             <computeMountainShadow>false</computeMountainShadow>
             <computeCloudShadow>true</computeCloudShadow>
             <computeCloudBuffer>true</computeCloudBuffer>
