@@ -16,7 +16,7 @@
             <sourceProduct refid="ReadDem"/>
         </sources>
         <parameters>
-            <resolution>10</resolution>
+            <targetResolution>10</targetResolution>
             <upsampling>Nearest</upsampling>
             <resampleOnPyramidLevels>false</resampleOnPyramidLevels>
         </parameters>
@@ -36,7 +36,7 @@
             <sourceProduct refid="ReadMsi"/>
         </sources>
         <parameters>
-            <resolution>10</resolution>
+            <targetResolution>10</targetResolution>
             <upsampling>Nearest</upsampling>
             <resampleOnPyramidLevels>false</resampleOnPyramidLevels>
         </parameters>
