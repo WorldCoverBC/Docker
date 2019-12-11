@@ -23,15 +23,15 @@ container_dst_path=${HOME}/processing/target
 if [ $# -eq 3 ]
 then
     dem=$1
-    src=$2
+    msi=$2
     dst=$3
 else
-    echo "usage: $0 <dem-tile-file-name> <src-tile-file-name> <dst-tile-file-name>"
+    echo "usage: $0 <dem-tile-file-name> <msi-tile-file-name> <dst-tile-file-name>"
     exit 0
 fi
 
 ${HOME}/snap/bin/gpt -e -c 9G -Dsnap.dataio.reader.tileHeight=732 \
   -Dsnap.dataio.reader.tileWidth=732 ${HOME}/worldcover-s2-pp.xml \
   -PsourceFileDem=${container_dem_path}/${dem} \
-  -PsourceFileL1c=${container_src_path}/${src} \
+  -PsourceFileMsi=${container_src_path}/${msi} \
   -PtargetFile=${container_dst_path}/${dst}
