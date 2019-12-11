@@ -18,7 +18,7 @@
         </parameters>
     </node>
 
-    <node id="ResampleTo20m">
+    <node id="ResampleMsiTo20m">
         <operator>S2Resampling</operator>
         <sources>
             <sourceProduct refid="ReadMsi"/>
@@ -28,14 +28,14 @@
             <upsampling>Bilinear</upsampling>
             <downsampling>Mean</downsampling>
             <flagDownsampling>First</flagDownsampling>
-            <resampleOnPyramidLevels>true</resampleOnPyramidLevels>
+            <resampleOnPyramidLevels>false</resampleOnPyramidLevels>
         </parameters>
     </node>
 
-    <node id="Merge">
+    <node id="AddElevationToMsi">
         <operator>Merge</operator>
         <sources>
-            <masterProduct refid="ResampleTo20m"/>
+            <masterProduct refid="ResampleMsiTo20m"/>
             <sourceProduct refid="ReadDem"/>
         </sources>
         <parameters>
@@ -53,12 +53,12 @@
     <node id="Classify">
         <operator>Idepix.S2</operator>
         <sources>
-            <sourceProduct>Merge</sourceProduct>
+            <sourceProduct refid="AddElevationToMsi"/>
         </sources>
         <parameters>
             <copyToaReflectances>true</copyToaReflectances>
-            <computeMountainShadow>false</computeMountainShadow>
-            <computeCloudShadow>false</computeCloudShadow>
+            <computeMountainShadow>false</computeMountainShadow> <!-- @todo set to true -->
+            <computeCloudShadow>false</computeCloudShadow> <!-- @todo set to true -->
             <computeCloudBuffer>true</computeCloudBuffer>
             <computeCloudBufferForCloudAmbiguous>false</computeCloudBufferForCloudAmbiguous>
             <cloudBufferWidth>10</cloudBufferWidth>
@@ -66,14 +66,14 @@
         </parameters>
     </node>
     
-    <node id="Subset">
+    <node id="TakeClassificationFlags">
         <operator>Subset</operator>
         <sources>
             <sourceProduct refid="Classify"/>
         </sources>
         <parameters>
-            <sourceBands>pixel_classif_flags</sourceBands>
             <referenceBand>pixel_classif_flags</referenceBand>
+            <sourceBands>pixel_classif_flags</sourceBands>
             <geoRegion/>
             <subSamplingX>1</subSamplingX>
             <subSamplingY>1</subSamplingY>
@@ -83,24 +83,24 @@
         </parameters>
     </node>
     
-    <node id="ResampleTo10m">
+    <node id="ResampleClassificationFlagsTo10m">
         <operator>Resample</operator>
         <sources>
-            <sourceProduct refid="Subset"/>
+            <sourceProduct refid="TakeClassificationFlags"/>
         </sources>
         <parameters>
             <targetResolution>10</targetResolution>
             <upsampling>Nearest</upsampling>
             <downsampling>Mean</downsampling>
             <flagDownsampling>First</flagDownsampling>
-            <resampleOnPyramidLevels>true</resampleOnPyramidLevels>
+            <resampleOnPyramidLevels>false</resampleOnPyramidLevels>
         </parameters>
     </node>
 
     <node id="Write">
         <operator>Write</operator>
         <sources>
-            <sourceProduct refid="ResampleTo10m"/>
+            <sourceProduct refid="ResampleClassificationFlagsTo10m"/>
         </sources>
         <parameters>
             <file>${targetFile}</file>
