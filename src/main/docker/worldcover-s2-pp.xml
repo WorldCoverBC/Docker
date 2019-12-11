@@ -69,7 +69,7 @@
         <parameters>
             <copyToaReflectances>true</copyToaReflectances>
             <computeMountainShadow>false</computeMountainShadow>
-            <computeCloudShadow>true</computeCloudShadow>
+            <computeCloudShadow>false</computeCloudShadow>
             <computeCloudBuffer>true</computeCloudBuffer>
             <computeCloudBufferForCloudAmbiguous>false</computeCloudBufferForCloudAmbiguous>
             <cloudBufferWidth>10</cloudBufferWidth>
