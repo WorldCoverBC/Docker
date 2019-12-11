@@ -1,14 +1,6 @@
 <graph id="worldcover-s2-pp">
     <version>1.0</version>
 
-    <node id="ReadMsi">
-        <operator>Read</operator>
-        <sources/>
-        <parameters>
-            <file>${sourceFileMsi}</file>
-        </parameters>
-    </node>
-
     <node id="ReadDem">
         <operator>Read</operator>
         <sources/>
@@ -18,25 +10,43 @@
         </parameters>
     </node>
 
-    <node id="ResampleMsiTo20m">
-        <operator>S2Resampling</operator>
+    <node id="ResampleDemTo10m">
+        <operator>Resample</operator>
         <sources>
-            <sourceProduct refid="ReadMsi"/>
+            <sourceProduct refid="ReadDem"/>
         </sources>
         <parameters>
-            <resolution>20</resolution>
-            <upsampling>Bilinear</upsampling>
-            <downsampling>Mean</downsampling>
-            <flagDownsampling>First</flagDownsampling>
+            <resolution>10</resolution>
+            <upsampling>Nearest</upsampling>
             <resampleOnPyramidLevels>false</resampleOnPyramidLevels>
         </parameters>
     </node>
 
-    <node id="AddElevationToMsi">
+    <node id="ReadMsi">
+        <operator>Read</operator>
+        <sources/>
+        <parameters>
+            <file>${sourceFileMsi}</file>
+        </parameters>
+    </node>
+
+    <node id="ResampleMsiTo10m">
+        <operator>Resample</operator>
+        <sources>
+            <sourceProduct refid="ReadMsi"/>
+        </sources>
+        <parameters>
+            <resolution>10</resolution>
+            <upsampling>Nearest</upsampling>
+            <resampleOnPyramidLevels>false</resampleOnPyramidLevels>
+        </parameters>
+    </node>
+
+    <node id="Merge">
         <operator>Merge</operator>
         <sources>
-            <masterProduct refid="ResampleMsiTo20m"/>
-            <sourceProduct refid="ReadDem"/>
+            <masterProduct refid="ResampleMsiTo10m"/>
+            <sourceProduct refid="ResampleDemTo10m"/>
         </sources>
         <parameters>
             <includes>
@@ -53,7 +63,7 @@
     <node id="Classify">
         <operator>Idepix.S2</operator>
         <sources>
-            <sourceProduct refid="AddElevationToMsi"/>
+            <sourceProduct refid="Merge"/>
         </sources>
         <parameters>
             <copyToaReflectances>true</copyToaReflectances>
@@ -83,24 +93,10 @@
         </parameters>
     </node>
     
-    <node id="ResampleClassificationFlagsTo10m">
-        <operator>Resample</operator>
-        <sources>
-            <sourceProduct refid="TakeClassificationFlags"/>
-        </sources>
-        <parameters>
-            <targetResolution>10</targetResolution>
-            <upsampling>Nearest</upsampling>
-            <downsampling>Mean</downsampling>
-            <flagDownsampling>First</flagDownsampling>
-            <resampleOnPyramidLevels>false</resampleOnPyramidLevels>
-        </parameters>
-    </node>
-
     <node id="Write">
         <operator>Write</operator>
         <sources>
-            <sourceProduct refid="ResampleClassificationFlagsTo10m"/>
+            <sourceProduct refid="TakeClassificationFlags"/>
         </sources>
         <parameters>
             <file>${targetFile}</file>
