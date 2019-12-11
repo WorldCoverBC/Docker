@@ -66,7 +66,7 @@
             <sourceProduct refid="Merge"/>
         </sources>
         <parameters>
-            <copyToaReflectances>true</copyToaReflectances> <!-- @todo set to false -->
+            <copyToaReflectances>true</copyToaReflectances> <!-- @todo possibly set to false -->
             <computeMountainShadow>false</computeMountainShadow> <!-- @todo set to true -->
             <computeCloudShadow>false</computeCloudShadow> <!-- @todo set to true -->
             <computeCloudBuffer>true</computeCloudBuffer>
@@ -87,7 +87,7 @@
             <geoRegion/>
             <subSamplingX>1</subSamplingX>
             <subSamplingY>1</subSamplingY>
-            <fullSwath/>
+            <fullSwath>false</fullSwath>
             <tiePointGridNames/>
             <copyMetadata>false</copyMetadata>
         </parameters>
