@@ -1,46 +1,29 @@
 <graph id="worldcover-s2-pp">
     <version>1.0</version>
+
+    <node id="ReadMsi">
+        <operator>Read</operator>
+        <sources/>
+        <parameters>
+            <file>${sourceFileMsi}</file>
+        </parameters>
+    </node>
+
     <node id="ReadDem">
         <operator>Read</operator>
         <sources/>
         <parameters>
             <file>${sourceFileDem}</file>
-        </parameters>
-    </node>
-
-    <node id="CreateElevation">
-        <operator>BandMaths</operator>
-        <sources>
-            <sourceProduct refid="ReadDem"/>
-        </sources>
-        <parameters>
-            <targetBands>
-                <targetBand>
-                    <name>elevation</name>
-                    <type>int16</type>
-                    <expression>band_1</expression>
-                    <description/>
-                    <unit/>
-                </targetBand>
-            </targetBands>
-            <variables/>
-        </parameters>
-    </node>
-
-    <node id="ReadL1c">
-        <operator>Read</operator>
-        <sources/>
-        <parameters>
-            <file>${sourceFileL1c}</file>
+            <formatName>GeoTIFF</formatName>
         </parameters>
     </node>
 
     <node id="ResampleTo20m">
         <operator>S2Resampling</operator>
         <sources>
-            <sourceProduct refid="ReadL1c"/>
+            <sourceProduct refid="ReadMsi"/>
         </sources>
-        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+        <parameters>
             <resolution>20</resolution>
             <upsampling>Bilinear</upsampling>
             <downsampling>Mean</downsampling>
@@ -50,15 +33,21 @@
     </node>
 
     <node id="Merge">
-        <operator>BandMerge</operator>
+        <operator>Merge</operator>
         <sources>
-            <sourceProduct refid="ResampleTo20m"/>
-            <sourceProduct.1 refid="CreateElevation"/>
+            <masterProduct refid="ResampleTo20m"/>
+            <sourceProduct refid="ReadDem"/>
         </sources>
-        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
-            <sourceBands/>
-            <geographicError>1.0E-5</geographicError>
-        </parameters>
+        <parameters>
+            <includes>
+                <include>
+                    <productId>sourceProduct</productId>
+                    <name>band_1</name>
+                    <newName>elevation</newName>
+                </include>
+            </includes>
+            <geographicError>NaN</geographicError>
+        </parameters>  
     </node>
 
     <node id="Classify">
@@ -73,6 +62,7 @@
             <computeCloudBuffer>true</computeCloudBuffer>
             <computeCloudBufferForCloudAmbiguous>false</computeCloudBufferForCloudAmbiguous>
             <cloudBufferWidth>10</cloudBufferWidth>
+            <demName/>
         </parameters>
     </node>
     
@@ -81,7 +71,7 @@
         <sources>
             <sourceProduct refid="Classify"/>
         </sources>
-        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+        <parameters>
             <sourceBands>pixel_classif_flags</sourceBands>
             <referenceBand>pixel_classif_flags</referenceBand>
             <geoRegion/>
@@ -98,7 +88,7 @@
         <sources>
             <sourceProduct refid="Subset"/>
         </sources>
-        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+        <parameters>
             <targetResolution>10</targetResolution>
             <upsampling>Nearest</upsampling>
             <downsampling>Mean</downsampling>
@@ -112,7 +102,7 @@
         <sources>
             <sourceProduct refid="ResampleTo10m"/>
         </sources>
-        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+        <parameters>
             <file>${targetFile}</file>
             <formatName>GeoTIFF</formatName>
         </parameters>
