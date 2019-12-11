@@ -21,6 +21,7 @@ LABEL description="Ubuntu Linux with Sentinel Toolboxes, IdePix and Sentinel-2 a
 RUN apt-get -y update
 RUN apt-get -y upgrade
 RUN apt-get install -y sudo
+RUN apt-get install -y libgfortran3
 RUN apt-get install -y wget
 RUN apt-get autoremove
 RUN apt-get autoclean
