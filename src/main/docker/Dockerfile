@@ -50,7 +50,8 @@ ADD modules-install.txt modules-install.txt
 
 # Add GPT wrapper script and graph
 ADD worldcover-s2-pp worldcover-s2-pp
-ADD worldcover-s2-pp.xml worldcover-s2-pp.xml
+ADD worldcover-s2-pp-10m.xml worldcover-s2-pp-10m.xml
+ADD worldcover-s2-pp-20m.xml worldcover-s2-pp-20m.xml
 
 # Make all scripts executable by user "worldcover"
 RUN sudo chown -R worldcover /home/worldcover

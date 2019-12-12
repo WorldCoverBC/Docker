@@ -20,17 +20,36 @@ container_dem_path=${HOME}/processing/dem
 container_src_path=${HOME}/processing/source
 container_dst_path=${HOME}/processing/target
 
-if [ $# -eq 3 ]
+if [ $# -eq 4 ]
 then
-    dem=$1
-    msi=$2
-    dst=$3
+    res=$1
+    dem=$2
+    msi=$3
+    dst=$4
 else
-    echo "usage: $0 <dem-tile-file-name> <msi-tile-file-name> <dst-tile-file-name>"
+    echo "usage: $0 <res:string> <dem:string> <msi:string> <dst:string>"
+    echo
+    echo "<res> The spatial resolution of the target tile, either '10m' or '20m'."
+    echo "<dem> The filename of the DEM tile, e.g. 'dem_32UNE.tif'"
+    echo "<msi> The filename of the MSI tile, e.g. 'S2A_MSIL1C_20191007T103021_N0208_R108_T32UNE_20191007T123034.SAFE'"
+    echo "<dst> The filename of the target tile, e.g. 'dst_32UNE.tif'"
     exit 0
 fi
 
-${HOME}/snap/bin/gpt -e -c 9G -Dsnap.dataio.reader.tileHeight=1220 -Dsnap.dataio.reader.tileWidth=1220 ${HOME}/worldcover-s2-pp.xml \
+if [ ${res} = "10m" ]
+then
+    h=1220
+    w=1220
+elif [ ${res} = "20m" ]
+then
+    h=610
+    w=610
+else
+    echo "error: illegal value for parameter <res>"
+    exit 1
+fi
+
+${HOME}/snap/bin/gpt -e -c 9G -Dsnap.dataio.reader.tileHeight=${h} -Dsnap.dataio.reader.tileWidth=${w} ${HOME}/worldcover-s2-pp-${res}.xml \
   -PsourceFileDem=${container_dem_path}/${dem} \
   -PsourceFileMsi=${container_src_path}/${msi} \
   -PtargetFile=${container_dst_path}/${dst}
