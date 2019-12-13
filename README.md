@@ -69,6 +69,8 @@ Follow the instructions given in [this blog](https://nickjanetakis.com/blog/sett
 3. Edit the Docker settings to expose the Docker daemon on `tcp://localhost:2375` 
 4. Activate WSL
 5. Install Ubuntu Linux from the Microsoft Store
-6. Start WSL/Ubuntu Linux
-6. Follow the instructions above to install Docker Engine on WSL/Ubuntu Linux
+6. Start WSL/Ubuntu
+6. Follow the instructions above to install Docker Engine on WSL/Ubuntu
 7. Add `export DOCKER_HOST=tcp://localhost:2375` to your `.bashrc`
+
+The Docker Engine installed on WSL/Ubuntu will then use the Docker daemon running on Windows.
