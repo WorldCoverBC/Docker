@@ -2,11 +2,13 @@
 
 This repository includes Docker files to create Docker images for the Worldcover Sentinel-2
 pre-processing steps. To create Docker images from Docker files, you have to install Docker
-Engine. Instructions for installing Docker Engine on Ubuntu Linux are given below.
+Engine. Instructions for setting up Docker are given below.
 
-# Installation of Docker Engine
+# Instructions for setting up Docker
 
-Open a terminal window and type the following commands
+## Linux
+
+The following instructions are for Ubuntu Linux. [Instructions for other Linux systems](https://docs.docker.com/install/) can be found on the [Docker web site](https://docs.docker.com/). Open a terminal window and type the following commands
 
     sudo apt-get update
 
@@ -37,7 +39,7 @@ Install Docker Engine
     sudo apt-get update
     sudo apt-get install docker-ce docker-ce-cli containerd.io
 
-# Post-installation steps (optional)
+## Linux post-installation steps (optional)
 
 Create  the `docker` group, if it does not exist already
 
@@ -57,3 +59,16 @@ to activate the changes to groups. Then type
 
 to verify that Docker Engine is installed correctly and you can use the
 docker command without `sudo`.
+
+## Windows and WSL
+
+Follow the instructions given in [this blog](https://nickjanetakis.com/blog/setting-up-docker-for-windows-and-wsl-to-work-flawlessly). In brief
+
+1. Install Docker Desktop
+2. Start Docker Desktop
+3. Edit the Docker settings to expose the Docker daemon on `tcp://localhost:2375` 
+4. Activate WSL
+5. Install Ubuntu Linux from the Microsoft Store
+6. Start WSL/Ubuntu Linux
+6. Follow the instructions above to install Docker Engine on WSL/Ubuntu Linux
+7. Add `export DOCKER_HOST=tcp://localhost:2375` to your `.bashrc`
