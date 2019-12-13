@@ -1,0 +1,96 @@
+<graph id="worldcover-s2-pp-20m">
+    <version>1.0</version>
+
+    <node id="ReadDem">
+        <operator>Read</operator>
+        <sources/>
+        <parameters>
+            <file>${sourceFileDem}</file>
+            <formatName>GeoTIFF</formatName>
+        </parameters>
+    </node>
+
+    <node id="ReadMsi">
+        <operator>Read</operator>
+        <sources/>
+        <parameters>
+            <file>${sourceFileMsi}</file>
+        </parameters>
+    </node>
+
+    <node id="ResampleMsiTo20m">
+        <operator>Resample</operator>
+        <sources>
+            <sourceProduct refid="ReadMsi"/>
+        </sources>
+        <parameters>
+            <targetResolution>20</targetResolution>
+            <upsampling>Bilinear</upsampling>
+            <downsampling>Mean</downsampling>
+            <flagDownsampling>First</flagDownsampling>
+            <resampleOnPyramidLevels>false</resampleOnPyramidLevels>
+        </parameters>
+    </node>
+
+    <node id="Merge">
+        <operator>Merge</operator>
+        <sources>
+            <masterProduct refid="ResampleMsiTo20m"/>
+            <sourceProduct refid="ReadDem"/>
+        </sources>
+        <parameters>
+            <includes>
+                <include>
+                    <productId>sourceProduct</productId>
+                    <name>band_1</name>
+                    <newName>elevation</newName>
+                </include>
+            </includes>
+            <geographicError>NaN</geographicError>
+        </parameters>  
+    </node>
+
+    <node id="Classify">
+        <operator>Idepix.S2</operator>
+        <sources>
+            <sourceProduct refid="Merge"/>
+        </sources>
+        <parameters>
+            <copyToaReflectances>true</copyToaReflectances> <!-- @todo possibly set to false -->
+            <computeMountainShadow>false</computeMountainShadow> <!-- @todo set to true -->
+            <computeCloudShadow>false</computeCloudShadow> <!-- @todo set to true -->
+            <computeCloudBuffer>true</computeCloudBuffer>
+            <computeCloudBufferForCloudAmbiguous>false</computeCloudBufferForCloudAmbiguous>
+            <cloudBufferWidth>10</cloudBufferWidth>
+            <demName/>
+        </parameters>
+    </node>
+    
+    <node id="TakeClassificationFlags">
+        <operator>Subset</operator>
+        <sources>
+            <sourceProduct refid="Classify"/>
+        </sources>
+        <parameters>
+            <referenceBand>pixel_classif_flags</referenceBand>
+            <sourceBands>pixel_classif_flags</sourceBands>
+            <geoRegion/>
+            <subSamplingX>1</subSamplingX>
+            <subSamplingY>1</subSamplingY>
+            <fullSwath>false</fullSwath>
+            <tiePointGridNames/>
+            <copyMetadata>false</copyMetadata>
+        </parameters>
+    </node>
+    
+    <node id="Write">
+        <operator>Write</operator>
+        <sources>
+            <sourceProduct refid="TakeClassificationFlags"/>
+        </sources>
+        <parameters>
+            <file>${targetFile}</file>
+            <formatName>GeoTIFF</formatName>
+        </parameters>
+    </node>
+</graph>
