@@ -67,7 +67,7 @@ Follow the instructions given in [this blog](https://nickjanetakis.com/blog/sett
 1. Install Docker Desktop
 2. Start Docker Desktop
 3. Edit the settings of Docker Desktop to expose the Docker daemon on `tcp://localhost:2375` 
-4. Activate WSL
+4. Enable WSL
 5. Install Ubuntu Linux from the Microsoft Store
 6. Start WSL/Ubuntu
 6. Follow the instructions above to install Docker Engine on WSL/Ubuntu
@@ -82,3 +82,7 @@ Follow the instructions given in [this blog](https://nickjanetakis.com/blog/sett
 9. Adjust the memory available to Docker Engine in the settings of Docker Desktop 
 
 The Docker Engine installed on WSL/Ubuntu will then use the Docker daemon running on Windows.
+
+## Windows
+
+You may use Docker Desktop for Windows without WSL. If you want to base your Docker images onto Linux, however, it is of advantage to test the commands you `RUN` in your Dockerfile beforehand (for which you may use WSL).
