@@ -71,7 +71,7 @@
             <computeCloudShadow>false</computeCloudShadow> <!-- @todo set to true -->
             <computeCloudBuffer>true</computeCloudBuffer>
             <computeCloudBufferForCloudAmbiguous>false</computeCloudBufferForCloudAmbiguous>
-            <cloudBufferWidth>10</cloudBufferWidth>
+            <cloudBufferWidth>20</cloudBufferWidth>
             <demName/>
         </parameters>
     </node>
