@@ -69,8 +69,8 @@ if you are member of the Worldcover project team. A Docker image resides in the 
 | 2    | 20 m              | 26      | 33       | 1594          |
 | 4    | 10 m              | 26      | 17       | 1578          |
 | 4    | 20 m              | 17      | 21       | 1041          |
-| 8    | 10 m              | xx      | xx       | xxxx          |
-| 8    | 20 m              | xx      | xx       | xxxx          |
+| 8    | 10 m              | 20      | 3        | 1203          |
+| 8    | 20 m              | 13      | 1        | 781           |
 
 The above timing results were obtained on Windows for the commands
 
