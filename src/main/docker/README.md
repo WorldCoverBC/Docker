@@ -57,4 +57,4 @@ You can find the data from the above example at
 
     ftp://cvbftp.vgt.vito.be/exchange/S2_processing/T32UNE.tar.gz
 
-if you are member of the Worldcover project team.
+if you are member of the Worldcover project team. A Docker image resides in the same directory.
