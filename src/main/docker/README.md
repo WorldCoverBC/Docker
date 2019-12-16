@@ -2,29 +2,29 @@
 
 Create the custom Docker image by typing
 
-    docker build -t bc/worldcover-s2-pp:0.3 . | tee build.log
+    docker build -t bc/worldcover-s2-pp:0.4 . | tee build.log
 
 Test the `gpt` command
 
-    docker run bc/worldcover-s2-pp:0.3 snap/bin/gpt
+    docker run bc/worldcover-s2-pp:0.4 snap/bin/gpt
 
 # Save the Docker image
 
-    docker save bc/worldcover-s2-pp:0.3 | gzip > image-bc-worldcover-s2-pp-v0.3.tar.gz
+    docker save bc/worldcover-s2-pp:0.4 | gzip > image-bc-worldcover-s2-pp-v0.4.tar.gz
 
 # Load the Docker image 
 
-    zcat image-bc-worldcover-s2-pp-v0.3.tar.gz | docker load
+    zcat image-bc-worldcover-s2-pp-v0.4.tar.gz | docker load
 
 # Run commands within the Docker container
 
 Display the SNAP command line tool help message
 
-    docker run bc/worldcover-s2-pp:0.3
+    docker run bc/worldcover-s2-pp:0.4
 
 Display the Sentinel-2 pre-processing command usage message
 
-    docker run bc/worldcover-s2-pp:0.3 ./worldcover-s2-pp
+    docker run bc/worldcover-s2-pp:0.4 ./worldcover-s2-pp
     
 Run the Sentinel-2 pre-processing on a given source tile
 
@@ -41,7 +41,7 @@ Be sure to replace the items in `<chevrons>` with paths and file names, which ac
       --mount type=bind,source=$HOME/test/dem,destination=/home/worldcover/processing/dem \
       --mount type=bind,source=$HOME/test/source,destination=/home/worldcover/processing/source \
       --mount type=bind,source=$HOME/test/target,destination=/home/worldcover/processing/target \
-      bc/worldcover-s2-pp:0.3 ./worldcover-s2-pp \
+      bc/worldcover-s2-pp:0.4 ./worldcover-s2-pp \
         10m dem_32UNE.tif S2A_MSIL1C_20191007T103021_N0208_R108_T32UNE_20191007T123034.SAFE dst_32UNE_10m.tif
 
 or
@@ -50,7 +50,7 @@ or
       --mount type=bind,source=$HOME/test/dem,destination=/home/worldcover/processing/dem \
       --mount type=bind,source=$HOME/test/source,destination=/home/worldcover/processing/source \
       --mount type=bind,source=$HOME/test/target,destination=/home/worldcover/processing/target \
-      bc/worldcover-s2-pp:0.3 ./worldcover-s2-pp \
+      bc/worldcover-s2-pp:0.4 ./worldcover-s2-pp \
         20m dem_32UNE.tif S2A_MSIL1C_20191007T103021_N0208_R108_T32UNE_20191007T123034.SAFE dst_32UNE_20m.tif
 
 # Example data

@@ -49,7 +49,7 @@ else
     exit 1
 fi
 
-${HOME}/snap/bin/gpt -e -c 9G -Dsnap.dataio.reader.tileHeight=${h} -Dsnap.dataio.reader.tileWidth=${w} ${HOME}/worldcover-s2-pp-${res}.xml \
+${HOME}/snap/bin/gpt -e -c 12G -Dsnap.dataio.reader.tileHeight=${h} -Dsnap.dataio.reader.tileWidth=${w} ${HOME}/worldcover-s2-pp-${res}.xml \
   -PsourceFileDem=${container_dem_path}/${dem} \
   -PsourceFileMsi=${container_src_path}/${msi} \
   -PtargetFile=${container_dst_path}/${dst}
