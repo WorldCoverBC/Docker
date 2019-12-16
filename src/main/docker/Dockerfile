@@ -67,6 +67,10 @@ RUN ./esa-snap-update-modules
 # Install additional modules
 RUN ./esa-snap-install-modules
 
+# Install auxiliary data for the land-water mask operator
+RUN mkdir -p .snap/auxdata/watermask
+ADD 50m.zip .snap/auxdata/watermask/50m.zip
+
 # Customize Java VM settings
 RUN rm -f snap/bin/gpt.vmoptions
 ADD gpt.vmoptions snap/bin/gpt.vmoptions
