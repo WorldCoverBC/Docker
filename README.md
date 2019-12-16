@@ -66,7 +66,7 @@ Follow the instructions given in [this blog](https://nickjanetakis.com/blog/sett
 
 1. Install Docker Desktop
 2. Start Docker Desktop
-3. Edit the settings of Docker Desktop to expose the Docker daemon on `tcp://localhost:2375` 
+3. Edit the settings of Docker Desktop to expose the Docker daemon on `tcp://localhost:2375` (Last checkbox "General" Tab)
 4. Enable WSL
 5. Install Ubuntu Linux from the Microsoft Store
 6. Start WSL/Ubuntu
