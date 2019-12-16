@@ -41,6 +41,8 @@ RUN mkdir -p processing/target
 
 # Fetch the SNAP installer script from ESA
 RUN wget http://step.esa.int/downloads/7.0/installers/esa-snap_sentinel_unix_7_0.sh
+# Fetch the SNAP auxiliary data from ESA
+RUN wget http://step.esa.int/auxdata/watermask/images/50m.zip
 
 # Add scripts for updating and installing modules
 ADD esa-snap-update-modules esa-snap-update-modules
@@ -68,7 +70,7 @@ RUN ./esa-snap-update-modules
 RUN ./esa-snap-install-modules
 # Install auxiliary data
 RUN mkdir -p .snap/auxdata/watermask
-ADD 50m.zip .snap/auxdata/watermask/50m.zip
+RUN mv 50m.zip .snap/auxdata/watermask
 
 # Customize Java VM settings
 RUN rm -f snap/bin/gpt.vmoptions
