@@ -66,8 +66,7 @@ RUN ./esa-snap-update-modules
 
 # Install additional modules
 RUN ./esa-snap-install-modules
-
-# Install auxiliary data for the land-water mask operator
+# Install auxiliary data
 RUN mkdir -p .snap/auxdata/watermask
 ADD 50m.zip .snap/auxdata/watermask/50m.zip
 
