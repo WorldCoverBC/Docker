@@ -69,8 +69,8 @@ if you are member of the Worldcover project team. A Docker image resides in the 
 | 2    | 20 m              | 26      | 33       | 1594          |
 | 4    | 10 m              | 26      | 17       | 1578          |
 | 4    | 20 m              | 17      | 21       | 1041          |
-| 8    | 10 m              | 20      | 3        | 1203          |
-| 8    | 20 m              | 13      | 1        | 781           |
+| 8    | 10 m              | 20      | 15       | 1215          |
+| 8    | 20 m              | 12      | 48       | 768           |
 
 The above timing results were obtained on Windows for the commands
 
@@ -78,12 +78,12 @@ The above timing results were obtained on Windows for the commands
     --mount type=bind,source="$HOME/test/dem",destination=/home/worldcover/processing/dem `
     --mount type=bind,source=$HOME/test/source,destination=/home/worldcover/processing/source `
     --mount type=bind,source=$HOME/test/target,destination=/home/worldcover/processing/target `
-    bc/worldcover-s2-pp:0.3 ./worldcover-s2-pp 10m `
+    bc/worldcover-s2-pp:0.4 ./worldcover-s2-pp 10m `
       dem_32UNE.tif S2A_MSIL1C_20191007T103021_N0208_R108_T32UNE_20191007T123034.SAFE dst_32UNE_10m.tif | Out-Default }
 
     Measure-Command { docker run --memory-reservation 16g `
     --mount type=bind,source="$HOME/test/dem",destination=/home/worldcover/processing/dem `
     --mount type=bind,source=$HOME/test/source,destination=/home/worldcover/processing/source `
     --mount type=bind,source=$HOME/test/target,destination=/home/worldcover/processing/target `
-    bc/worldcover-s2-pp:0.3 ./worldcover-s2-pp 20m `
+    bc/worldcover-s2-pp:0.4 ./worldcover-s2-pp 20m `
       dem_32UNE.tif S2A_MSIL1C_20191007T103021_N0208_R108_T32UNE_20191007T123034.SAFE dst_32UNE_20m.tif | Out-Default }
