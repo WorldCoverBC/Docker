@@ -5,4 +5,8 @@
 -Xms14G
 -Xmx14G
 
--DDEM.srtm3GeoTiffDEMDataPath=${user.home}/processing/dem
+# Set the logging level (INFO includes messages from progress monitoring, FINE includes more detailed messages)  
+-Dsnap.log.level=FINE
+
+# Put out (or do not put out) information for debugging (this is not related to logging)
+-Dsnap.debug=false
