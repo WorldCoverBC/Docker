@@ -16,3 +16,6 @@
 *.log
 *.tar
 *.tar.gz
+
+# SNAP 7.x
+src/main/docker/esa-snap_all_unix_7_x.sh
