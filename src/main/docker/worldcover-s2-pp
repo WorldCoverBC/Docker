@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # usage: esa-snap-worldcover-s2-pp <source-product> <target-product>
 set -e
 # Copyright (C) 2019 Brockmann Consult GmbH (info@brockmann-consult.de)
@@ -34,7 +34,14 @@ else
     exit 0
 fi
 
+echo "$(date -u "+%Y-%m-%dT%H:%M:%S") [INFO] Starting Sentinel-2 pre-processing ..."
+echo "$(date -u "+%Y-%m-%dT%H:%M:%S") [INFO] DEM = ${dem}"
+echo "$(date -u "+%Y-%m-%dT%H:%M:%S") [INFO] MSI = ${msi}"
+echo "$(date -u "+%Y-%m-%dT%H:%M:%S") [INFO] DST = ${dst}"
+
 ${HOME}/snap/bin/gpt -e -c 12G ${HOME}/WorldCover_S2_IdePix.xml \
   -PsourceFileDem=${container_dem_path}/${dem} \
   -PsourceFileMsi=${container_src_path}/${msi} \
   -PtargetFile=${container_dst_path}/${dst}
+  
+echo "$(date -u "+%Y-%m-%dT%H:%M:%S") [INFO] Finished Sentinel-2 pre-processing in ${SECONDS} seconds"
