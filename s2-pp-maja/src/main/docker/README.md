@@ -6,7 +6,7 @@ Create the custom Docker image by typing
 
 Test the container and obtain a usage message by typing
 
-    docker run bc/worldcover--maja-s2-pp:0.1
+    docker run bc/worldcover-maja-s2-pp:0.1
 
 # Save the Docker image
 
@@ -60,4 +60,4 @@ directory before you run the example.
 
 # Timing results
 
-Running the above example to 26701 seconds.
+Running the above example needed 26701 seconds.
