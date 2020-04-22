@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+# usage: maja-s2-pp <tile> <start-date> <final-date> <site>
+set -e
+# Copyright (C) 2020 Brockmann Consult GmbH (info@brockmann-consult.de)
+#
+# This program is free software; you can redistribute it and/or modify it
+# under the terms of the GNU General Public License as published by the Free
+# Software Foundation; either version 3 of the License, or (at your option)
+# any later version.
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+# more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with this program; if not, see http://www.gnu.org/licenses/
+
+. /opt/conda/etc/profile.d/conda.sh
+
+prog=$(basename $0)
+progdir=$(readlink -f $(dirname $0))
+work=$(pwd)
+
+site="maja"
+start="20150723"
+final="20291231"
+
+if [ $# -eq 4 ]
+then
+    tile=$1
+    site=$2
+    start=$3
+    final=$4
+elif [ $# -eq 2 ]
+then
+    tile=$1
+    site=$2
+elif [ $# -eq 1 ]
+then
+    tile=$1
+else
+    echo
+    echo "usage: ${prog} <tile:string>"
+    echo "usage: ${prog} <tile:string> <site:string>"
+    echo "usage: ${prog} <tile:string> <site:string> <start-date:yyyymmdd> <final-date:yyyymmdd>"
+    echo
+    echo "<tile> The identifier of the S-2 tile, e.g. '32UME'"
+    echo "<site> The (custom) name of the site (default is 'maja')"
+    echo "<start-date> The start date of the time series (default is '20150723')"
+    echo "<final-date> The final date of the time series (default is '20291231')"
+    echo
+    exit 0
+fi
+
+cd ${progdir}
+conda activate maja
+
+echo "$(date -u "+%Y-%m-%dT%H:%M:%S") [INFO] Starting Sentinel-2 pre-processing ..."
+echo "$(date -u "+%Y-%m-%dT%H:%M:%S") [INFO] tile = ${tile}"
+echo "$(date -u "+%Y-%m-%dT%H:%M:%S") [INFO] site = ${site}"
+echo "$(date -u "+%Y-%m-%dT%H:%M:%S") [INFO] start-date = ${start}"
+echo "$(date -u "+%Y-%m-%dT%H:%M:%S") [INFO] final-date = ${final}"
+
+./maja-create-dtm ${tile}
+./maja-start ${tile} ${site}
+./maja-cleanup ${tile} ${site}
+
+echo "$(date -u "+%Y-%m-%dT%H:%M:%S") [INFO] Finished Sentinel-2 pre-processing in ${SECONDS} seconds"
+
+conda deactivate
+cd ${work}

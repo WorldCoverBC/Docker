@@ -13,9 +13,12 @@
 .vscode/
 
 # Other
+*.kml
 *.log
+*.run
 *.tar
 *.tar.gz
+*.zip
 
 # SNAP 7.x
 src/main/docker/esa-snap_all_unix_7_x.sh

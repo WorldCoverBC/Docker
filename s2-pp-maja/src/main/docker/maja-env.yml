@@ -1,0 +1,8 @@
+name: maja
+channels:
+ - conda-forge
+ - defaults
+dependencies:
+ - gdal=2.4.4
+ - python=2.7
+ - scipy

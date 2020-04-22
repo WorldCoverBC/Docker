@@ -1,0 +1,6 @@
+repCode=/worldcover/Start-MAJA
+repWork=/worldcover/tmp
+repL1=/worldcover/source
+repL2=/worldcover/target
+repMaja=/worldcover/maja/bin/maja
+repCAMS=/worldcover/cams
