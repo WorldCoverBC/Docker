@@ -14,8 +14,8 @@
 
 FROM centos:7
 
-LABEL version="0.1"
-LABEL description="CentOS Linux with Maja 3.3.2."
+LABEL version="0.2"
+LABEL description="CentOS Linux with MAJA 3.3.5."
 
 # Install conda
 RUN rpm --import https://repo.anaconda.com/pkgs/misc/gpgkeys/anaconda.asc
@@ -23,6 +23,7 @@ ADD conda.repo /etc/yum.repos.d/conda.repo
 RUN yum -y install conda
 RUN yum -y install file
 RUN yum -y install git
+RUN yum -y install sudo
 RUN yum -y install unzip
 
 # Create directory structure
@@ -42,8 +43,8 @@ RUN mkdir -p /worldcover/target
 WORKDIR /worldcover
 
 # Install MAJA
-ADD Maja_3.3.2_TM.run Maja_3.3.2_TM.run
-RUN ./Maja_3.3.2_TM.run --target /worldcover/maja
+ADD MAJA-3.3.5.run MAJA-3.3.5.run
+RUN ./MAJA-3.3.5.run --target /worldcover/maja
 
 # Install Start-MAJA
 RUN git clone https://github.com/CNES/Start-MAJA.git
@@ -69,11 +70,11 @@ ADD maja-env-create maja-env-create
 ADD maja-env.yml maja-env.yml
 
 # Add user 'worldcover'
-#RUN adduser worldcover
-#RUN chown -R worldcover /worldcover
-#RUN chgrp -R worldcover /worldcover
+# RUN adduser worldcover
+# RUN chown -R worldcover /worldcover
+# RUN chgrp -R worldcover /worldcover
 # Change user
-#USER worldcover
+# USER worldcover
 
 # Create MAJA Python environment
 RUN ./maja-env-create
@@ -82,7 +83,7 @@ RUN ./maja-env-create
 RUN rm -rf ./maja-env-create
 RUN rm -rf ./maja-env.yml
 RUN rm -rf ./Start-MAJA/.git
-RUN rm -rf ./Maja_3.3.2_TM.run
+RUN rm -rf ./MAJA-3.3.5.run
 
 # Default command
 CMD ["./maja-s2-pp"]
