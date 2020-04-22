@@ -2,19 +2,19 @@
 
 Create the custom Docker image by typing
 
-    docker build -t bc/worldcover-maja-s2-pp:0.1 . | tee build.log
+    docker build -t bc/worldcover-maja-s2-pp:0.2 . | tee build.log
 
 Test the container and obtain a usage message by typing
 
-    docker run bc/worldcover-maja-s2-pp:0.1
+    docker run bc/worldcover-maja-s2-pp:0.2
 
 # Save the Docker image
 
-    docker save bc/worldcover-maja-s2-pp:0.1 | gzip > image-bc-worldcover-maja-s2-pp-v0.1.tar.gz
+    docker save bc/worldcover-maja-s2-pp:0.2 | gzip > image-bc-worldcover-maja-s2-pp-v0.2.tar.gz
 
 # Load the Docker image 
 
-    zcat image-bc-worldcover-maja-s2-pp-v0.1.tar.gz | docker load
+    zcat image-bc-worldcover-maja-s2-pp-v0.2.tar.gz | docker load
 
 # Run commands within the Docker container
 
@@ -29,7 +29,7 @@ Run the Sentinel-2 MAJA pre-processing on a given source tile
       --mount type=bind,source=</path/on/host/to/tmp>,destination=/worldcover/tmp \
       --mount type=bind,source=</path/on/host/to/source>,destination=/worldcover/source \
       --mount type=bind,source=</path/on/host/to/target>,destination=/worldcover/target \
-      bc/worldcover-maja-s2-pp:0.1 \
+      bc/worldcover-maja-s2-pp:0.2 \
         ./maja-s2-pp <tile> [<site>] [<start-date>] [<final-date>]
 
 Be sure to replace the items in <chevrons> with paths and file names, which actually exist. For example:
@@ -43,7 +43,7 @@ Be sure to replace the items in <chevrons> with paths and file names, which actu
       --mount type=bind,source=$HOME/worldcover-example/maja/tmp,destination=/worldcover/tmp \
       --mount type=bind,source=$HOME/worldcover-example/source,destination=/worldcover/source \
       --mount type=bind,source=$HOME/worldcover-example/target,destination=/worldcover/target \
-      bc/worldcover-maja-s2-pp:0.1 \
+      bc/worldcover-maja-s2-pp:0.2 \
         ./maja-s2-pp 32UME Bremen
 
 # Example data
