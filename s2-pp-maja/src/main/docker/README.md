@@ -1,6 +1,14 @@
 # Create the Docker image
 
-Create the custom Docker image by typing
+Follow the instructions in
+
+    MAJA-3.3.5.md
+
+to download MAJA and the instructions in
+
+    map/S2A_OPER_GIP_TILPAR_MPC__20151209T095117_V20150622T000000_21000101T000000_B00.md
+
+to download the Sentinel-2 tiling grid KML file. Then create the custom Docker image by typing
 
     docker build -t bc/worldcover-maja-s2-pp:0.2 . | tee build.log
 
