@@ -69,3 +69,8 @@ directory before you run the example.
 # Timing results
 
 Running the above example needed 26701 seconds.
+
+# Using MAJA for regions not covered by SRTM
+
+There is an [issue and solution](https://github.com/CNES/Start-MAJA/issues/53) on the Start-MAJA GitHub repository related to this problem.
+
