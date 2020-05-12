@@ -41,12 +41,12 @@
       <sources>
         <sourceProduct refid="Read"/>
       </sources>
-      <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <parameters>
         <resolution>20</resolution>
         <upsampling>Bilinear</upsampling>
         <downsampling>Mean</downsampling>
         <flagDownsampling>First</flagDownsampling>
-        <resampleOnPyramidLevels>true</resampleOnPyramidLevels>
+        <resampleOnPyramidLevels>false</resampleOnPyramidLevels>
       </parameters>
     </node>
 
@@ -66,7 +66,7 @@
         <sourceProduct refid="BandMergeTileCache"/>
         <sourceProduct.1 refid="BandMaths"/>
       </sources>
-      <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <parameters>
         <sourceBands/>
         <geographicError>1.0E-5</geographicError>
       </parameters>
@@ -93,7 +93,7 @@
       <sources>
         <sourceProduct refid="IdePixNode"/>
       </sources>
-      <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <parameters>
         <targetResolution>10</targetResolution>
         <upsampling>Nearest</upsampling>
         <downsampling>Mean</downsampling>
@@ -108,7 +108,7 @@
       <sources>
         <sourceProduct refid="IdePixNode"/>
       </sources>
-      <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <parameters>
         <file>${targetFile}</file>
         <formatName>GeoTIFF</formatName>
       </parameters>
