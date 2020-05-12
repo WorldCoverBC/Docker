@@ -14,7 +14,7 @@
 
 FROM ubuntu:bionic
 
-LABEL version="0.4"
+LABEL version="0.8"
 LABEL description="Ubuntu Linux with Sentinel Toolboxes, IdePix and Sentinel-2 atmospheric correction."
 
 # Update the Linux system and install prerequisites
