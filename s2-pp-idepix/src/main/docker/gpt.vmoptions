@@ -2,8 +2,8 @@
 # To include another file, uncomment the following line:
 # -include-options [path to other .vmoption file]
 -server
--Xms8G
--Xmx8G
+-Xms6656M
+-Xmx6656M
 
 # Set the logging level (INFO includes messages from progress monitoring, FINE includes more detailed messages)  
 -Dsnap.log.level=FINE
