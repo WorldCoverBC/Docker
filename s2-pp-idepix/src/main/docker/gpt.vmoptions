@@ -1,8 +1,8 @@
 # Enter one VM parameter per line
 # To include another file, uncomment the following line:
 # -include-options [path to other .vmoption file]
--server
--Xmx18G
+-Xms8G
+-Xmx8G
 
 # Set the logging level (INFO includes messages from progress monitoring, FINE includes more detailed messages)  
 -Dsnap.log.level=FINE
