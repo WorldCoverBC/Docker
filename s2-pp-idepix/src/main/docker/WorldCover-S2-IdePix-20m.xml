@@ -53,7 +53,7 @@
     <node id="Merge">
       <operator>BandMerge</operator>
       <sources>
-        <sourceProduct refid="ResampledMsi"/>
+        <sourceProduct refid="ResampleMsi"/>
         <sourceProduct.1 refid="AddVirtualElevationBand"/>
       </sources>
       <parameters>
