@@ -54,8 +54,8 @@ ADD modules-install.txt modules-install.txt
 
 # Add GPT wrapper script and graph
 ADD worldcover-s2-pp worldcover-s2-pp
-ADD worldcover-s2-pp-10m.xml worldcover-s2-pp-10m.xml
-ADD worldcover-s2-pp-20m.xml worldcover-s2-pp-20m.xml
+ADD WorldCover-S2-IdePix-20m.xml WorldCover-S2-IdePix-20m.xml
+ADD WorldCover-S2-IdePix-60m.xml WorldCover-S2-IdePix-60m.xml
 
 # Make all scripts executable by user "worldcover"
 RUN sudo chown -R worldcover /home/worldcover
@@ -90,4 +90,4 @@ ENV LD_LIBRARY_PATH .
 RUN snap/bin/gpt
 
 # Default command
-CMD ["snap/bin/gpt"]
+CMD ["./worldcover-s2-pp"]
