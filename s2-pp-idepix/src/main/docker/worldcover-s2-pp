@@ -48,7 +48,7 @@ echo "$(date -u "+%Y-%m-%dT%H:%M:%S") [INFO] MSI = ${msi}"
 echo "$(date -u "+%Y-%m-%dT%H:%M:%S") [INFO] DST = ${dst}"
 echo "$(date -u "+%Y-%m-%dT%H:%M:%S") [INFO] RES = ${res}"
 
-${HOME}/snap/bin/gpt -e ${HOME}/WorldCover-S2-IdePix-${res}.xml \
+${HOME}/snap/bin/gpt -c 1G -e -q 8 ${HOME}/WorldCover-S2-IdePix-${res}.xml \
   -PsourceFileDem=${container_dem_path}/${dem} \
   -PsourceFileMsi=${container_src_path}/${msi} \
   -PtargetFile=${container_dst_path}/${dst}
