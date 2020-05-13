@@ -1,0 +1,114 @@
+<graph id="S2-IdePix-60m">
+  <version>1.0</version>
+    <node id="ReadMsi">
+      <operator>Read</operator>
+      <sources/>
+      <parameters>
+        <file>${sourceFileMsi}</file>
+      </parameters>
+    </node>
+
+    <node id="ReadDem">
+      <operator>Read</operator>
+      <sources/>
+      <parameters>
+        <file>${sourceFileDem}</file>
+      </parameters>
+    </node>
+
+    <node id="ResampleDem">
+      <operator>Resample</operator>
+      <sources>
+        <sourceProduct refid="ReadDem"/>
+      </sources>
+      <parameters>
+        <targetResolution>60</targetResolution>
+        <upsampling>Nearest</upsampling>
+        <downsampling>Mean</downsampling>
+        <flagDownsampling>First</flagDownsampling>
+        <resampleOnPyramidLevels>false</resampleOnPyramidLevels>
+      </parameters>
+    </node>
+
+    <node id="AddVirtualElevationBand">
+      <operator>BandMaths</operator>
+      <sources>
+        <sourceProduct refid="ResampleDem"/>
+      </sources>
+      <parameters>
+        <targetBands>
+          <targetBand>
+            <name>elevation</name>
+            <type>int16</type>
+            <expression>band_1</expression>
+            <description/>
+            <unit/>
+          </targetBand>
+        </targetBands>
+        <variables/>
+      </parameters>
+    </node>
+
+    <node id="ResampleMsi">
+      <operator>S2Resampling</operator>
+      <sources>
+        <sourceProduct refid="ReadMsi"/>
+      </sources>
+      <parameters>
+        <resolution>20</resolution>
+        <upsampling>Bilinear</upsampling>
+        <downsampling>Mean</downsampling>
+        <flagDownsampling>First</flagDownsampling>
+        <resampleOnPyramidLevels>false</resampleOnPyramidLevels>
+      </parameters>
+    </node>
+
+  <node id="CacheResampledMsi">
+      <operator>TileCache</operator>
+      <sources>
+        <source>ResampleMsi</source>
+      </sources>
+      <parameters>
+        <cacheSize>2560</cacheSize>
+      </parameters>
+    </node>
+
+    <node id="Merge">
+      <operator>BandMerge</operator>
+      <sources>
+        <sourceProduct refid="CacheResampledMsi"/>
+        <sourceProduct.1 refid="AddVirtualElevationBand"/>
+      </sources>
+      <parameters>
+        <sourceBands/>
+        <geographicError>1.0E-5</geographicError>
+      </parameters>
+    </node>
+
+    <node id="IdePix">
+      <operator>Idepix.S2</operator>
+      <sources>
+            <sourceProduct>Merge</sourceProduct>
+      </sources>
+      <parameters>
+        <copyToaReflectances>false</copyToaReflectances>
+        <computeMountainShadow>false</computeMountainShadow>
+        <computeCloudShadow>true</computeCloudShadow>
+        <computeCloudBuffer>true</computeCloudBuffer>
+        <computeCloudBufferForCloudAmbiguous>false</computeCloudBufferForCloudAmbiguous>
+        <cloudBufferWidth>3</cloudBufferWidth>
+      </parameters>
+    </node>
+
+    <node id="Write">
+      <operator>Write</operator>
+      <sources>
+        <sourceProduct refid="IdePix"/>
+      </sources>
+      <parameters>
+        <file>${targetFile}</file>
+        <formatName>GeoTIFF</formatName>
+      </parameters>
+    </node>
+    
+</graph>
