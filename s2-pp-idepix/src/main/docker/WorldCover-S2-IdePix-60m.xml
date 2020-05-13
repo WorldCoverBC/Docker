@@ -81,7 +81,7 @@
       </sources>
       <parameters>
         <sourceBands/>
-        <geographicError>NaN</geographicError>
+        <geographicError>1.0</geographicError> <!-- exact value does not matter here -->
       </parameters>
     </node>
 
