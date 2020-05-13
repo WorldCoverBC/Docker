@@ -2,7 +2,7 @@
 # To include another file, uncomment the following line:
 # -include-options [path to other .vmoption file]
 -server
--Xms6G
+-Xms8G
 -Xmx8G
 
 # Set the logging level (INFO includes messages from progress monitoring, FINE includes more detailed messages)  
