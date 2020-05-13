@@ -1,6 +1,7 @@
 # Enter one VM parameter per line
 # To include another file, uncomment the following line:
 # -include-options [path to other .vmoption file]
+-server
 -Xms6G
 -Xmx8G
 
