@@ -50,7 +50,7 @@
       </parameters>
     </node>
 
-  <node id="CacheResampledMsi">
+    <node id="CacheResampledMsi">
       <operator>TileCache</operator>
       <sources>
         <source>ResampleMsi</source>
