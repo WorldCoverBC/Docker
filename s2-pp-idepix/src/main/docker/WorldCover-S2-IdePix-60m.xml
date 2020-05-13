@@ -55,7 +55,7 @@
         <sourceProduct refid="ReadMsi"/>
       </sources>
       <parameters>
-        <resolution>20</resolution>
+        <resolution>60</resolution>
         <upsampling>Bilinear</upsampling>
         <downsampling>Mean</downsampling>
         <flagDownsampling>First</flagDownsampling>
@@ -81,7 +81,7 @@
       </sources>
       <parameters>
         <sourceBands/>
-        <geographicError>1.0E-5</geographicError>
+        <geographicError>NaN</geographicError>
       </parameters>
     </node>
 
