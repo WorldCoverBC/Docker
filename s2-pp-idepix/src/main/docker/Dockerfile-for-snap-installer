@@ -45,6 +45,9 @@ ADD esa-snap_all_unix_7_x.sh esa-snap_all_unix_7_x.sh
 # Fetch the SNAP auxiliary data from ESA
 RUN wget http://step.esa.int/auxdata/watermask/images/50m.zip
 RUN wget http://step.esa.int/auxdata/watermask/images/150m.zip
+RUN wget http://step.esa.int/auxdata/watermask/images/GC_water_mask.zip
+RUN wget http://step.esa.int/auxdata/watermask/images/MODIS_north_water_mask.zip
+RUN wget http://step.esa.int/auxdata/watermask/images/MODIS_south_water_mask.zip
 
 # Add scripts for updating and installing modules
 ADD esa-snap-update-modules esa-snap-update-modules
@@ -74,6 +77,9 @@ RUN ./esa-snap-install-modules
 RUN mkdir -p .snap/auxdata/watermask
 RUN mv 50m.zip .snap/auxdata/watermask
 RUN mv 150m.zip .snap/auxdata/watermask
+RUN mv GC_water_mask.zip .snap/auxdata/watermask
+RUN mv MODIS_north_water_mask.zip .snap/auxdata/watermask
+RUN mv MODIS_south_water_mask.zip .snap/auxdata/watermask
 
 # Customize Java VM settings
 RUN rm -f snap/bin/gpt.vmoptions
